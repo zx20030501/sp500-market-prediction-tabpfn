@@ -76,3 +76,5 @@ python scripts/apply_runtime_cap.py --notebook notebooks/kaggle-submit-tabtfn.ip
 ## 推荐阅读
 - `kaggle-summary.md`
 - `notebooks/hull-tabtfn-only-success.ipynb`
+- `docs/run_all.md`
+- `docs/run_all_report.md`

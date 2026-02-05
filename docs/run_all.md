@@ -14,6 +14,18 @@ Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 .\run_all.ps1 -InstallDeps
 ```
 
+## GPU 依赖与注意事项（重要）
+- `run_all.ps1` 默认使用 **PATH 中的 `python`**，请确保该解释器已安装 **CUDA 版 Torch**，否则将退回 CPU 运行（速度非常慢）。  
+- 推荐 Python 3.11，并使用官方 CUDA 版 Torch，例如（根据你的驱动/CUDA 版本选择合适的版本）：  
+```powershell
+pip install torch --index-url https://download.pytorch.org/whl/cu121
+```
+- 运行前建议检查：
+```powershell
+python -c "import torch; print(torch.cuda.is_available()); print(torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'N/A')"
+```
+- 若提示 `False`，请先安装 CUDA 版 Torch，再执行 `run_all.ps1`。
+
 ## 文件夹路径设置
 推荐结构：
 ```
