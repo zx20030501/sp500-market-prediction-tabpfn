@@ -76,6 +76,7 @@ pip install kaggle
 ## 参数说明
 - `-DataRoot`：数据根目录（含 `train.csv/test.csv`）
 - `-OutDir`：输出目录
+- `-PythonExe`：指定 Python 解释器路径（建议指向 GPU 可用的 Python）
 - `-InstallDeps`：安装依赖
 - `-DownloadData`：自动下载 Kaggle 数据并解压
 - `-KaggleCompetition`：比赛标识，默认 `hull-tactical-market-prediction`
@@ -104,7 +105,8 @@ pip install kaggle
 说明：本地评分基于 **训练集末尾窗口** 的校准评估（Adjusted Sharpe），不是 Kaggle 线上分数。
 
 ```powershell
-py -3.11 src\run_tabpfn_pipeline.py `
+$pythonExe = "C:\Users\xuanz\AppData\Local\Programs\Python\Python311\python.exe"
+& $pythonExe scripts\score_local.py `
   --data-root d:\OneDrive\Project\kaggle-hull\data\hull-tactical-market-prediction `
   --out-dir outputs_local_score `
   --max-training-rows 5000

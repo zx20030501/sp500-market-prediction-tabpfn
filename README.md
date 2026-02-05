@@ -53,12 +53,14 @@ Windows / PowerShell 可使用：
 - `-DownloadData`：用 Kaggle CLI 自动下载数据
 - `-KaggleCompetition`：比赛标识（默认 `hull-tactical-market-prediction`）
 - `-SkipValidation`：跳过提交文件校验
+- `-PythonExe`：指定 Python 解释器路径（建议指向 GPU 可用的 Python）
 
 ## 本地评分示例
 说明：本地评分基于 **训练集末尾窗口** 的校准评估（Adjusted Sharpe），不是 Kaggle 线上分数。
 
 ```powershell
-py -3.11 src\run_tabpfn_pipeline.py `
+$pythonExe = "C:\Users\xuanz\AppData\Local\Programs\Python\Python311\python.exe"
+& $pythonExe scripts\score_local.py `
   --data-root d:\OneDrive\Project\kaggle-hull\data\hull-tactical-market-prediction `
   --out-dir outputs_local_score `
   --max-training-rows 5000

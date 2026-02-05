@@ -1,6 +1,7 @@
 ﻿param(
     [string]$DataRoot = "",
     [string]$OutDir = "outputs",
+    [string]$PythonExe = "",
     [switch]$InstallDeps,
     [switch]$DownloadData,
     [string]$KaggleCompetition = "hull-tactical-market-prediction",
@@ -16,9 +17,16 @@ $ErrorActionPreference = "Stop"
 $repoRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 Set-Location $repoRoot
 
+$pythonCmd = "python"
+if ($PythonExe -ne "") {
+    $pythonCmd = (Resolve-Path $PythonExe).Path
+    $pythonDir = Split-Path $pythonCmd
+    $env:Path = "$pythonDir;$env:Path"
+}
+
 if ($InstallDeps) {
     Write-Host "[INFO] Installing dependencies..."
-    python -m pip install -r requirements.txt
+    & $pythonCmd -m pip install -r requirements.txt
 }
 
 function Ensure-DataRoot([string]$root) {
@@ -42,15 +50,17 @@ if ($resolvedDataRoot) {
 }
 
 function Download-KaggleData([string]$targetDir, [string]$competition) {
-    if (-not (Get-Command kaggle -ErrorAction SilentlyContinue)) {
-        throw "Kaggle CLI not found. Install via 'pip install kaggle' and ensure it's on PATH."
+    try {
+        & $pythonCmd -m kaggle --version | Out-Null
+    } catch {
+        throw "Kaggle CLI not found. Install via '$pythonCmd -m pip install kaggle' and ensure it's on PATH."
     }
     $kaggleConfig = Join-Path $env:USERPROFILE ".kaggle\kaggle.json"
     if (-not (Test-Path $kaggleConfig)) {
         throw "Kaggle credentials not found. Place kaggle.json in $kaggleConfig"
     }
     Write-Host "[INFO] Downloading Kaggle competition data: $competition"
-    kaggle competitions download -c $competition -p $targetDir
+    & $pythonCmd -m kaggle competitions download -c $competition -p $targetDir
 
     Get-ChildItem -Path $targetDir -Filter *.zip | ForEach-Object {
         Write-Host "[INFO] Extracting $($_.Name)"
@@ -71,10 +81,10 @@ if (-not $SkipEda) {
     if ($DataRoot -ne "") {
         $edaArgs += @("--data-root", $DataRoot)
     }
-    python @edaArgs
+    & $pythonCmd @edaArgs
 
     Write-Host "[INFO] Generating EDA plots..."
-    python src/eda_make_plots.py
+    & $pythonCmd src/eda_make_plots.py
 }
 
 Write-Host "[INFO] Running TabPFN pipeline..."
@@ -91,7 +101,7 @@ if ($Offline) {
 if ($MaxTrainingRows -gt 0) {
     $pipelineArgs += @("--max-training-rows", $MaxTrainingRows)
 }
-python @pipelineArgs
+& $pythonCmd @pipelineArgs
 
 function Validate-Submission([string]$submissionPath, [string]$testPath) {
     if (-not (Test-Path $submissionPath)) {

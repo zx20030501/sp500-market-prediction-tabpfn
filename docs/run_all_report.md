@@ -56,6 +56,23 @@
 ## 结果得分
 - **未提交 Kaggle**，暂无线上评分。
 
+## 本地评分（校准窗口）
+本地评分基于训练集末尾窗口的校准评估（Adjusted Sharpe），命令：
+```powershell
+$pythonExe = "C:\Users\xuanz\AppData\Local\Programs\Python\Python311\python.exe"
+& $pythonExe scripts\score_local.py `
+  --data-root d:\OneDrive\Project\kaggle-hull\data\hull-tactical-market-prediction `
+  --out-dir outputs_local_score `
+  --max-training-rows 5000
+```
+
+输出（`outputs_local_score/artifacts/tabpfn_model/metadata.json`）：
+- `raw_sharpe`: **1.732858297614543**
+- `adjusted_sharpe`: **2.054413659354495**
+- `scale`: **1.195813715004886**
+- `shift`: **-0.0009645427413516152**
+- `window`: **180**
+
 ## 改进建议
 1. **增加 GPU 检测**：运行前检查 `torch.cuda.is_available()`，无 GPU 则直接退出或提示。
 2. **支持指定解释器**：在 `run_all.ps1` 增加 `-PythonExe` 参数，强制使用 GPU 解释器。
