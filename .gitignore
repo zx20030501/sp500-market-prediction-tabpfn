@@ -1,0 +1,36 @@
+﻿# Large/raw Kaggle workspace
+hull-tabpfn-r7000/
+
+# Data and inputs
+/data/
+/input/
+**/hull-tactical-market-prediction/
+
+# Models and caches
+artifacts/
+.hf_cache/
+**/tabpfn_model/
+**/*.ckpt
+**/*.joblib
+
+# Wheels / offline bundles
+**/kaggle-linux-wheels-tabpfn/
+**/kaggle-linux-wheels-tabpfn.zip
+**/*.whl
+**/*.zip
+
+# Outputs
+**/submission.csv
+**/submission.parquet
+**/*.log
+
+# Python
+__pycache__/
+*.pyc
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Editor
+.vscode/
+.DS_Store
