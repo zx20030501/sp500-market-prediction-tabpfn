@@ -43,6 +43,8 @@ Windows / PowerShell 可使用：
 ```powershell
 .\run_all.ps1 -DataRoot data\hull-tactical-market-prediction -OutDir outputs -InstallDeps
 ```
+详细操作说明见：`docs/run_all.md`
+
 可选参数：
 - `-SkipEda`：跳过 EDA
 - `-CkptPath`：指定本地 TabPFN 权重
