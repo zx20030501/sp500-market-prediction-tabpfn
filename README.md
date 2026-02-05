@@ -38,6 +38,17 @@ python src/eda_tabpfn.py --data-root data/hull-tactical-market-prediction --outp
 python src/eda_make_plots.py
 ```
 
+## 一键运行
+Windows / PowerShell 可使用：
+```powershell
+.\run_all.ps1 -DataRoot data\hull-tactical-market-prediction -OutDir outputs -InstallDeps
+```
+可选参数：
+- `-SkipEda`：跳过 EDA
+- `-CkptPath`：指定本地 TabPFN 权重
+- `-Offline`：强制离线模式
+- `-MaxTrainingRows`：训练下采样行数（加速）
+
 ## 重要说明
 - 数据集与大文件（模型、缓存、离线 wheel）已加入 `.gitignore`。
 - TabPFN 默认会从 HuggingFace 拉取权重，离线环境可传入：
