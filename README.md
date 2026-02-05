@@ -48,6 +48,9 @@ Windows / PowerShell 可使用：
 - `-CkptPath`：指定本地 TabPFN 权重
 - `-Offline`：强制离线模式
 - `-MaxTrainingRows`：训练下采样行数（加速）
+- `-DownloadData`：用 Kaggle CLI 自动下载数据
+- `-KaggleCompetition`：比赛标识（默认 `hull-tactical-market-prediction`）
+- `-SkipValidation`：跳过提交文件校验
 
 ## 重要说明
 - 数据集与大文件（模型、缓存、离线 wheel）已加入 `.gitignore`。
