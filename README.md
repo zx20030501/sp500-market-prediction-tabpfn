@@ -1,4 +1,6 @@
-﻿# Hull TabPFN - Kaggle 比赛总结与复现
+﻿# sp500-market-prediction-tabpfn (Hull TabPFN)
+
+基于多因子金融时间序列数据，预测 `forward_returns`，评估指标为调整后的 Sharpe（调整后风险收益比）。
 
 本仓库是对 `hull-tabpfn` 工作目录的整理版本，保留了核心代码、Notebook 与可视化产物，便于别人一键拉取并复现实验。
 
