@@ -6,7 +6,7 @@
 
 import os
 import subprocess
-from datetime import datetime
+from datetime import datetime, timezone
 
 def get_git_info():
     """获取 Git 仓库信息"""
@@ -70,7 +70,7 @@ def update_readme():
         return
     
     # 创建更新时间戳
-    update_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S UTC')
+    update_time = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')
     
     # 查找是否存在自动更新标记
     start_marker = "<!-- AUTO-UPDATE-START -->"
