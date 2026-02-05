@@ -23,6 +23,8 @@ artifacts/
 **/submission.csv
 **/submission.parquet
 **/*.log
+outputs*/
+outputs_local_score/
 
 # Python
 __pycache__/

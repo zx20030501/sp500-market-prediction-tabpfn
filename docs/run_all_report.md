@@ -82,3 +82,13 @@ $pythonExe = "C:\Users\xuanz\AppData\Local\Programs\Python\Python311\python.exe"
 
 ## 结论
 一键流程在 GPU 环境下 **可成功生成提交文件**，但 CPU 运行耗时过长。建议默认要求 GPU 或提供明确的 GPU 安装与检测机制。
+
+## 复测（修复后）
+为消除 EDA 报错，修复了两处问题：
+- 分类列为空时的 `describe()` 处理
+- PCA 载荷维度不匹配问题
+
+使用 `run_all.ps1 -PythonExe <GPU Python>` 在本机重新跑一遍（输出到 `outputs_fullflow3`），结果：
+- EDA + pipeline 全流程完成 ✅
+- 生成 `submission.csv` ✅
+- 仅出现 `seaborn` 的 FutureWarning（不影响结果）

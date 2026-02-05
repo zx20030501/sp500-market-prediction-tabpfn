@@ -62,10 +62,12 @@ def load_bundle(data_root: Path) -> DatasetBundle:
 def describe_dataframe(df: pd.DataFrame, name: str, out_dir: Path) -> None:
     """Save descriptive stats for numeric and categorical columns."""
     numeric_report = df.describe(include=[np.number]).T
-    categorical_report = df.describe(include=["object", "category"]).T
     numeric_report.to_csv(out_dir / f"{name}_numeric_stats.csv")
-    if not categorical_report.empty:
-        categorical_report.to_csv(out_dir / f"{name}_categorical_stats.csv")
+    cat_cols = df.select_dtypes(include=["object", "category"]).columns
+    if len(cat_cols) > 0:
+        categorical_report = df[cat_cols].describe().T
+        if not categorical_report.empty:
+            categorical_report.to_csv(out_dir / f"{name}_categorical_stats.csv")
 
 
 def report_missing_values(train: pd.DataFrame, out_dir: Path) -> None:
@@ -121,7 +123,7 @@ def run_pca(train: pd.DataFrame, target_col: str, out_dir: Path, max_components:
     scaled = scaler.fit_transform(work)
     n_components = min(max_components, scaled.shape[1])
     pca = PCA(n_components=n_components, random_state=42)
-    components = pca.fit_transform(scaled)
+    _ = pca.fit_transform(scaled)
     loadings = pca.components_
 
     explained = pd.DataFrame({
@@ -142,7 +144,7 @@ def run_pca(train: pd.DataFrame, target_col: str, out_dir: Path, max_components:
             "top_features": ", ".join(top_features.index.tolist()),
         })
     pd.DataFrame(summary_rows).to_csv(out_dir / "pca_top_features.csv", index=False)
-    return components, features
+    return loadings, features
 
 
 def identify_key_features(
