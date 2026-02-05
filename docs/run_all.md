@@ -100,6 +100,22 @@ pip install kaggle
 
 如需跳过：使用 `-SkipValidation`。
 
+## 本地评分示例
+说明：本地评分基于 **训练集末尾窗口** 的校准评估（Adjusted Sharpe），不是 Kaggle 线上分数。
+
+```powershell
+py -3.11 src\run_tabpfn_pipeline.py `
+  --data-root d:\OneDrive\Project\kaggle-hull\data\hull-tactical-market-prediction `
+  --out-dir outputs_local_score `
+  --max-training-rows 5000
+
+type outputs_local_score\artifacts\tabpfn_model\metadata.json
+```
+
+关注字段：
+- `raw_sharpe`
+- `adjusted_sharpe`
+
 ## 常见问题
 - Kaggle CLI 未找到：请确认 `kaggle` 命令可用且已安装。
 - 离线环境：必须提供 `-CkptPath` 并使用 `-Offline`。

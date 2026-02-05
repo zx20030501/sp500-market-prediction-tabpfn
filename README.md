@@ -54,6 +54,22 @@ Windows / PowerShell 可使用：
 - `-KaggleCompetition`：比赛标识（默认 `hull-tactical-market-prediction`）
 - `-SkipValidation`：跳过提交文件校验
 
+## 本地评分示例
+说明：本地评分基于 **训练集末尾窗口** 的校准评估（Adjusted Sharpe），不是 Kaggle 线上分数。
+
+```powershell
+py -3.11 src\run_tabpfn_pipeline.py `
+  --data-root d:\OneDrive\Project\kaggle-hull\data\hull-tactical-market-prediction `
+  --out-dir outputs_local_score `
+  --max-training-rows 5000
+
+type outputs_local_score\artifacts\tabpfn_model\metadata.json
+```
+
+重点字段：
+- `raw_sharpe`
+- `adjusted_sharpe`
+
 ## 重要说明
 - 数据集与大文件（模型、缓存、离线 wheel）已加入 `.gitignore`。
 - TabPFN 默认会从 HuggingFace 拉取权重，离线环境可传入：
