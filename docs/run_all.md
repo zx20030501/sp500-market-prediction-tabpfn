@@ -25,6 +25,8 @@ pip install torch --index-url https://download.pytorch.org/whl/cu121
 python -c "import torch; print(torch.cuda.is_available()); print(torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'N/A')"
 ```
 - 若提示 `False`，请先安装 CUDA 版 Torch，再执行 `run_all.ps1`。
+- **GPU 监测与强退**：默认启用 GPU 监测（依赖 `nvidia-smi`），若在检测窗口内 **GPU 利用率与显存占用均低于阈值**，会自动终止 pipeline 并报错。
+- 如需允许 CPU 运行：使用 `-RequireGPU:$false`。
 
 ## 文件夹路径设置
 推荐结构：
@@ -68,6 +70,11 @@ pip install kaggle
 .\run_all.ps1 -DataRoot data\hull-tactical-market-prediction -OutDir outputs -SkipEda
 ```
 
+允许 CPU 运行（关闭 GPU 强退）：
+```powershell
+.\run_all.ps1 -DataRoot data\hull-tactical-market-prediction -OutDir outputs -RequireGPU:$false
+```
+
 离线模式（本地 ckpt）：
 ```powershell
 .\run_all.ps1 -DataRoot data\hull-tactical-market-prediction -OutDir outputs -CkptPath D:\models\tabpfn-v2-regressor.ckpt -Offline
@@ -85,12 +92,30 @@ pip install kaggle
 - `-Offline`：强制离线
 - `-MaxTrainingRows`：训练下采样行数
 - `-SkipValidation`：跳过提交文件校验
+- `-RequireGPU`：是否强制 GPU（默认 `true`，若 GPU 不可用或检测到 CPU 运行会强退）
+- `-GpuMinUtil`：GPU 利用率阈值（默认 `5`）
+- `-GpuMinMemoryMB`：GPU 显存占用阈值（默认 `200` MB）
+- `-GpuCheckDelaySec`：启动后等待多久再开始监测（默认 `30` 秒）
+- `-GpuCheckWindowSec`：连续低于阈值的窗口时长（默认 `120` 秒）
+- `-GpuCheckIntervalSec`：监测采样间隔（默认 `10` 秒）
+- `-LogPath`：指定主日志路径（默认写入 `outputs/logs/`）
+- `-DisableLog`：关闭自动日志保存
 
 ## 输出内容
 - `submission.csv`
 - `submission.parquet`
 - `artifacts/tabpfn_model/`
 - `eda/`（未跳过 EDA 时）
+
+## 日志保存
+默认会在 `OutDir\logs\` 下保存日志：
+- `run_all_时间戳.log`：脚本整体日志
+- `pipeline_时间戳.log` / `pipeline_时间戳.err.log`：模型推理日志
+
+如需实时查看：
+```powershell
+Get-Content -Path outputs\logs\pipeline_时间戳.log -Wait
+```
 
 ## 提交文件校验
 默认会检查：
@@ -122,3 +147,7 @@ type outputs_local_score\artifacts\tabpfn_model\metadata.json
 - Kaggle CLI 未找到：请确认 `kaggle` 命令可用且已安装。
 - 离线环境：必须提供 `-CkptPath` 并使用 `-Offline`。
 - 行数校验失败：检查 `DataRoot` 是否正确、是否使用了正确的 `test.csv`。
+
+## 相关文档
+- `docs/tech_overview.md`
+- `docs/scoring.md`
