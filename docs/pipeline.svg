@@ -1,39 +1,41 @@
-﻿<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="200" viewBox="0 0 1120 200">
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="240" viewBox="0 0 1200 240">
   <defs>
     <marker id="arrow" markerWidth="10" markerHeight="10" refX="10" refY="3" orient="auto" markerUnits="strokeWidth">
       <path d="M0,0 L10,3 L0,6 Z" fill="#1f2933" />
     </marker>
     <style>
       .box { fill: #f5f7fa; stroke: #1f2933; stroke-width: 2; }
-      .text { font-family: Arial, sans-serif; font-size: 14px; fill: #1f2933; }
+      .text { font-family: Arial, sans-serif; font-size: 16px; fill: #1f2933; }
       .arrow { stroke: #1f2933; stroke-width: 2; marker-end: url(#arrow); }
     </style>
   </defs>
 
-  <rect class="box" x="20" y="70" width="160" height="60" rx="6" />
-  <text class="text" x="100" y="105" text-anchor="middle">Data</text>
+  <rect x="0" y="0" width="1200" height="240" fill="#ffffff" />
 
-  <rect class="box" x="200" y="70" width="160" height="60" rx="6" />
-  <text class="text" x="280" y="98" text-anchor="middle">Feature</text>
-  <text class="text" x="280" y="118" text-anchor="middle">build + lag</text>
+  <rect class="box" x="30" y="80" width="170" height="80" rx="6" />
+  <text class="text" x="115" y="122" text-anchor="middle">Data</text>
 
-  <rect class="box" x="380" y="70" width="160" height="60" rx="6" />
-  <text class="text" x="460" y="105" text-anchor="middle">Model</text>
+  <rect class="box" x="220" y="80" width="170" height="80" rx="6" />
+  <text class="text" x="305" y="112" text-anchor="middle">Feature</text>
+  <text class="text" x="305" y="132" text-anchor="middle">build + lag</text>
 
-  <rect class="box" x="560" y="70" width="160" height="60" rx="6" />
-  <text class="text" x="640" y="98" text-anchor="middle">Calibration</text>
-  <text class="text" x="640" y="118" text-anchor="middle">scale/shift</text>
+  <rect class="box" x="410" y="80" width="170" height="80" rx="6" />
+  <text class="text" x="495" y="122" text-anchor="middle">Model</text>
 
-  <rect class="box" x="740" y="70" width="160" height="60" rx="6" />
-  <text class="text" x="820" y="98" text-anchor="middle">Position</text>
-  <text class="text" x="820" y="118" text-anchor="middle">sizing (clip)</text>
+  <rect class="box" x="600" y="80" width="170" height="80" rx="6" />
+  <text class="text" x="685" y="112" text-anchor="middle">Calibration</text>
+  <text class="text" x="685" y="132" text-anchor="middle">scale/shift</text>
 
-  <rect class="box" x="920" y="70" width="160" height="60" rx="6" />
-  <text class="text" x="1000" y="105" text-anchor="middle">Submission</text>
+  <rect class="box" x="790" y="80" width="170" height="80" rx="6" />
+  <text class="text" x="875" y="112" text-anchor="middle">Position</text>
+  <text class="text" x="875" y="132" text-anchor="middle">sizing (clip)</text>
 
-  <line class="arrow" x1="180" y1="100" x2="200" y2="100" />
-  <line class="arrow" x1="360" y1="100" x2="380" y2="100" />
-  <line class="arrow" x1="540" y1="100" x2="560" y2="100" />
-  <line class="arrow" x1="720" y1="100" x2="740" y2="100" />
-  <line class="arrow" x1="900" y1="100" x2="920" y2="100" />
+  <rect class="box" x="980" y="80" width="170" height="80" rx="6" />
+  <text class="text" x="1065" y="122" text-anchor="middle">Submission</text>
+
+  <line class="arrow" x1="200" y1="120" x2="220" y2="120" />
+  <line class="arrow" x1="390" y1="120" x2="410" y2="120" />
+  <line class="arrow" x1="580" y1="120" x2="600" y2="120" />
+  <line class="arrow" x1="770" y1="120" x2="790" y2="120" />
+  <line class="arrow" x1="960" y1="120" x2="980" y2="120" />
 </svg>

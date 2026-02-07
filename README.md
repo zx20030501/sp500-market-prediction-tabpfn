@@ -34,6 +34,15 @@ $pythonExe = "C:\Users\xuanz\AppData\Local\Programs\Python\Python311\python.exe"
 - Ablation：关闭校准、改变校准窗口、去掉 lag 特征、不同下采样规模、仅 CPU 运行对比。
 
 **Pipeline**
+如果你的 Markdown 渲染器不支持 Mermaid，请直接使用 PNG/SVG：
+
+![Pipeline](docs/pipeline.png)
+
+[SVG 版本](docs/pipeline.svg)
+
+<details>
+<summary>Mermaid 源码（可选）</summary>
+
 ```mermaid
 flowchart LR
   Data[Raw data (train/test)] --> Feature[Feature build + lagged cols]
@@ -42,11 +51,11 @@ flowchart LR
   Calib --> Position[Position sizing (clip)]
   Position --> Submission[submission.csv]
 ```
-图示文件：`docs/pipeline.svg`
 
-![Pipeline](docs/pipeline.svg)
+</details>
 
 **可审计：时间切分/OOF**
+- 结论清单与验证脚本：`docs/01_oof_split_audit.md`
 - 训练集去泄漏：`src/run_tabpfn_pipeline.py` 的 `load_data` 使用 `test_start = int(test_df["date_id"].min())`，保留 `train_df["date_id"] < test_start`。
 - 可验证输出：脚本打印 `Train rows ... Overlap dates ...`，可用 `overlap_dates` 检查是否存在重叠日期。
 - 校准窗口：`calibrate_predictions` 对训练集末尾 `calibration_window` 天（默认 180）优化 scale/shift。
@@ -163,3 +172,6 @@ python scripts/apply_runtime_cap.py --notebook notebooks/kaggle-submit-tabtfn.ip
 - `docs/run_all.md`
 - `docs/run_all_report.md`
 - `notebooks/hull-tabtfn-only-success.ipynb`
+
+
+

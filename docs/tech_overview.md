@@ -1,6 +1,15 @@
-# ¼¼Êõ×ÜÀÀ£¨Hull TabPFN£©
+ï»¿# æŠ€æœ¯æ€»è§ˆï¼ˆHull TabPFNï¼‰
 
 ## Pipeline
+å¦‚æœä½ çš„ Markdown æ¸²æŸ“å™¨ä¸æ”¯æŒ Mermaidï¼Œè¯·ç›´æ¥ä½¿ç”¨ PNG/SVGï¼š
+
+![Pipeline](./pipeline.png)
+
+[SVG ç‰ˆæœ¬](./pipeline.svg)
+
+<details>
+<summary>Mermaid æºç ï¼ˆå¯é€‰ï¼‰</summary>
+
 ```mermaid
 flowchart LR
   Data[Raw data (train/test)] --> Feature[Feature build + lagged cols]
@@ -10,28 +19,30 @@ flowchart LR
   Position --> Submission[submission.csv]
 ```
 
-## OOF/Ê±¼äÇĞ·Ö£¨¿ÉÉó¼ÆËµÃ÷£©
-- Éú²ú½Å±¾Ä¬ÈÏÊÇ¡°µ¥´ÎÇ°ÏòÇĞ·Ö + Ğ£×¼´°¿Ú¡±£¬²»ÊÇ rolling OOF¡£
-- ÑµÁ·¼¯È¥Ğ¹Â©£ºÒÔ `test.csv` µÄ×îĞ¡ `date_id` ×÷Îª²âÊÔÆğµã£¬ÌŞ³ıÑµÁ·¼¯ÖĞ `date_id >= test_start` µÄĞĞ¡£
-- Ğ£×¼´°¿Ú£ºÖ»È¡ÑµÁ·¼¯Ä©Î² `calibration_window` Ìì£¨Ä¬ÈÏ 180£©ÓÅ»¯ scale/shift¡£
-- Ç°ÊÓÌØÕ÷¹ıÂË£ºÅÅ³ı°üº¬ `forward/future/lead/next` µÄÁĞ£¨`lagged_` Ç°×º³ıÍâ£©¡£
-- ´úÂëÈë¿Ú£º`src/run_tabpfn_pipeline.py` ÖĞ `load_data`¡¢`_is_forward_looking`¡¢`calibrate_predictions`¡£
-- ÈôĞèÒª rolling OOF£¬ÇëÔÚ Notebook ÀïÀ©Õ¹Ê±¼ä»¬´°ÑéÖ¤£¨Î´½ÓÈë `run_all.ps1`£©¡£
+</details>
 
-## ÆÀ·ÖÊµÏÖÓë¶ÔÆë
-- ÆÀ·ÖÊµÏÖÈë¿Ú£º`src/run_tabpfn_pipeline.py` ÖĞ `adjusted_sharpe`¡£
-- Ğ£×¼Èë¿Ú£º`src/run_tabpfn_pipeline.py` ÖĞ `calibrate_predictions`£¨Powell ÓÅ»¯ scale/shift£©¡£
-- ÆÀ·Ö¹«Ê½Óë³Í·£ÏîËµÃ÷¼û `docs/scoring.md`¡£
+## OOF/æ—¶é—´åˆ‡åˆ†ï¼ˆå¯å®¡è®¡è¯´æ˜ï¼‰
+- ç”Ÿäº§è„šæœ¬é»˜è®¤æ˜¯â€œå•æ¬¡å‰å‘åˆ‡åˆ† + æ ¡å‡†çª—å£â€ï¼Œä¸æ˜¯ rolling OOFã€‚
+- è®­ç»ƒé›†å»æ³„æ¼ï¼šä»¥ `test.csv` çš„æœ€å° `date_id` ä½œä¸ºæµ‹è¯•èµ·ç‚¹ï¼Œå‰”é™¤è®­ç»ƒé›†ä¸­ `date_id >= test_start` çš„è¡Œã€‚
+- æ ¡å‡†çª—å£ï¼šåªå–è®­ç»ƒé›†æœ«å°¾ `calibration_window` å¤©ï¼ˆé»˜è®¤ 180ï¼‰ä¼˜åŒ– scale/shiftã€‚
+- å‰è§†ç‰¹å¾è¿‡æ»¤ï¼šæ’é™¤åŒ…å« `forward/future/lead/next` çš„åˆ—ï¼ˆ`lagged_` å‰ç¼€é™¤å¤–ï¼‰ã€‚
+- ä»£ç å…¥å£ï¼š`src/run_tabpfn_pipeline.py` ä¸­ `load_data`ã€`_is_forward_looking`ã€`calibrate_predictions`ã€‚
+- è‹¥éœ€è¦ rolling OOFï¼Œè¯·åœ¨ Notebook é‡Œæ‰©å±•æ—¶é—´æ»‘çª—éªŒè¯ï¼ˆæœªæ¥å…¥ `run_all.ps1`ï¼‰ã€‚
 
-## ÍÆÀíÓëÌá½»Ó³Éä
-- Ä£ĞÍÊä³ö£º`TabPFNService.predict_raw` Éú³É¶Ô `forward_returns` µÄÁ¬ĞøÔ¤²â¡£
-- Ó³Éä£º`apply_calibration` ½øĞĞ `scale/shift`£¬²¢ clip µ½ `[min_position, max_position]`£¨Ä¬ÈÏ 0 µ½ 2£©¡£
-- Ìá½»×Ö¶Î£º`run_pipeline` ×Ô¶¯Éú³É `submission.csv`£¬ÁĞÎª `row_id/id` Óë `prediction`¡£
-- ´úÂëÈë¿Ú£º`src/run_tabpfn_pipeline.py` ÖĞ `TabPFNService.predict` Óë `run_pipeline`¡£
+## è¯„åˆ†å®ç°ä¸å¯¹é½
+- è¯„åˆ†å®ç°å…¥å£ï¼š`src/run_tabpfn_pipeline.py` ä¸­ `adjusted_sharpe`ã€‚
+- æ ¡å‡†å…¥å£ï¼š`src/run_tabpfn_pipeline.py` ä¸­ `calibrate_predictions`ï¼ˆPowell ä¼˜åŒ– scale/shiftï¼‰ã€‚
+- è¯„åˆ†å…¬å¼ä¸æƒ©ç½šé¡¹è¯´æ˜è§ `docs/scoring.md`ã€‚
 
-## Ablation ½¨Òé
-- ¹Ø±ÕĞ£×¼£º¶Ô±È `predict_raw` ÓëĞ£×¼ºó `predict` µÄ·ÖÊı²îÒì¡£
-- ¸Ä±äĞ£×¼´°¿Ú£ºÀıÈç 60/180/360 ÈÕ¡£
-- È¥µô lag ÌØÕ÷»òÇ°ÊÓÁĞ¹ıÂË£¬¹Û²ìËÙ¶ÈÓëÎÈ¶¨ĞÔÓ°Ïì¡£
-- µ÷ÕûÏÂ²ÉÑù¹æÄ££ºÀıÈç 5k/10k/20k¡£
-- CPU Óë GPU ÔËĞĞ¶Ô±È£º¹Ø×¢ºÄÊ±ÓëÎÈ¶¨ĞÔ¡£
+## æ¨ç†ä¸æäº¤æ˜ å°„
+- æ¨¡å‹è¾“å‡ºï¼š`TabPFNService.predict_raw` ç”Ÿæˆå¯¹ `forward_returns` çš„è¿ç»­é¢„æµ‹ã€‚
+- æ˜ å°„ï¼š`apply_calibration` è¿›è¡Œ `scale/shift`ï¼Œå¹¶ clip åˆ° `[min_position, max_position]`ï¼ˆé»˜è®¤ 0 åˆ° 2ï¼‰ã€‚
+- æäº¤å­—æ®µï¼š`run_pipeline` è‡ªåŠ¨ç”Ÿæˆ `submission.csv`ï¼Œåˆ—ä¸º `row_id/id` ä¸ `prediction`ã€‚
+- ä»£ç å…¥å£ï¼š`src/run_tabpfn_pipeline.py` ä¸­ `TabPFNService.predict` ä¸ `run_pipeline`ã€‚
+
+## Ablation å»ºè®®
+- å…³é—­æ ¡å‡†ï¼šå¯¹æ¯” `predict_raw` ä¸æ ¡å‡†å `predict` çš„åˆ†æ•°å·®å¼‚ã€‚
+- æ”¹å˜æ ¡å‡†çª—å£ï¼šä¾‹å¦‚ 60/180/360 æ—¥ã€‚
+- å»æ‰ lag ç‰¹å¾æˆ–å‰è§†åˆ—è¿‡æ»¤ï¼Œè§‚å¯Ÿé€Ÿåº¦ä¸ç¨³å®šæ€§å½±å“ã€‚
+- è°ƒæ•´ä¸‹é‡‡æ ·è§„æ¨¡ï¼šä¾‹å¦‚ 5k/10k/20kã€‚
+- CPU ä¸ GPU è¿è¡Œå¯¹æ¯”ï¼šå…³æ³¨è€—æ—¶ä¸ç¨³å®šæ€§ã€‚
